@@ -9,38 +9,288 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
+import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppWorkloadRouteImport } from './routes/app.workload'
+import { Route as AppSettingsRouteImport } from './routes/app.settings'
+import { Route as AppSchedulingRouteImport } from './routes/app.scheduling'
+import { Route as AppRiskRouteImport } from './routes/app.risk'
+import { Route as AppReportsRouteImport } from './routes/app.reports'
+import { Route as AppRecommendationsRouteImport } from './routes/app.recommendations'
+import { Route as AppProfileRouteImport } from './routes/app.profile'
+import { Route as AppPredictiveRouteImport } from './routes/app.predictive'
+import { Route as AppMatchingRouteImport } from './routes/app.matching'
+import { Route as AppEmployeesRouteImport } from './routes/app.employees'
+import { Route as AppDashboardRouteImport } from './routes/app.dashboard'
+import { Route as AppAuditRouteImport } from './routes/app.audit'
+import { Route as AppAllocationRouteImport } from './routes/app.allocation'
 
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppRoute = AppRouteImport.update({
+  id: '/app',
+  path: '/app',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppIndexRoute = AppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppWorkloadRoute = AppWorkloadRouteImport.update({
+  id: '/workload',
+  path: '/workload',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSchedulingRoute = AppSchedulingRouteImport.update({
+  id: '/scheduling',
+  path: '/scheduling',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppRiskRoute = AppRiskRouteImport.update({
+  id: '/risk',
+  path: '/risk',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppReportsRoute = AppReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppRecommendationsRoute = AppRecommendationsRouteImport.update({
+  id: '/recommendations',
+  path: '/recommendations',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppProfileRoute = AppProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPredictiveRoute = AppPredictiveRouteImport.update({
+  id: '/predictive',
+  path: '/predictive',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMatchingRoute = AppMatchingRouteImport.update({
+  id: '/matching',
+  path: '/matching',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppEmployeesRoute = AppEmployeesRouteImport.update({
+  id: '/employees',
+  path: '/employees',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDashboardRoute = AppDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAuditRoute = AppAuditRouteImport.update({
+  id: '/audit',
+  path: '/audit',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAllocationRoute = AppAllocationRouteImport.update({
+  id: '/allocation',
+  path: '/allocation',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/app': typeof AppRouteWithChildren
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/app/allocation': typeof AppAllocationRoute
+  '/app/audit': typeof AppAuditRoute
+  '/app/dashboard': typeof AppDashboardRoute
+  '/app/employees': typeof AppEmployeesRoute
+  '/app/matching': typeof AppMatchingRoute
+  '/app/predictive': typeof AppPredictiveRoute
+  '/app/profile': typeof AppProfileRoute
+  '/app/recommendations': typeof AppRecommendationsRoute
+  '/app/reports': typeof AppReportsRoute
+  '/app/risk': typeof AppRiskRoute
+  '/app/scheduling': typeof AppSchedulingRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/workload': typeof AppWorkloadRoute
+  '/app/': typeof AppIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/app/allocation': typeof AppAllocationRoute
+  '/app/audit': typeof AppAuditRoute
+  '/app/dashboard': typeof AppDashboardRoute
+  '/app/employees': typeof AppEmployeesRoute
+  '/app/matching': typeof AppMatchingRoute
+  '/app/predictive': typeof AppPredictiveRoute
+  '/app/profile': typeof AppProfileRoute
+  '/app/recommendations': typeof AppRecommendationsRoute
+  '/app/reports': typeof AppReportsRoute
+  '/app/risk': typeof AppRiskRoute
+  '/app/scheduling': typeof AppSchedulingRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/workload': typeof AppWorkloadRoute
+  '/app': typeof AppIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/app': typeof AppRouteWithChildren
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/app/allocation': typeof AppAllocationRoute
+  '/app/audit': typeof AppAuditRoute
+  '/app/dashboard': typeof AppDashboardRoute
+  '/app/employees': typeof AppEmployeesRoute
+  '/app/matching': typeof AppMatchingRoute
+  '/app/predictive': typeof AppPredictiveRoute
+  '/app/profile': typeof AppProfileRoute
+  '/app/recommendations': typeof AppRecommendationsRoute
+  '/app/reports': typeof AppReportsRoute
+  '/app/risk': typeof AppRiskRoute
+  '/app/scheduling': typeof AppSchedulingRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/workload': typeof AppWorkloadRoute
+  '/app/': typeof AppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/app'
+    | '/forgot-password'
+    | '/login'
+    | '/reset-password'
+    | '/app/allocation'
+    | '/app/audit'
+    | '/app/dashboard'
+    | '/app/employees'
+    | '/app/matching'
+    | '/app/predictive'
+    | '/app/profile'
+    | '/app/recommendations'
+    | '/app/reports'
+    | '/app/risk'
+    | '/app/scheduling'
+    | '/app/settings'
+    | '/app/workload'
+    | '/app/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/forgot-password'
+    | '/login'
+    | '/reset-password'
+    | '/app/allocation'
+    | '/app/audit'
+    | '/app/dashboard'
+    | '/app/employees'
+    | '/app/matching'
+    | '/app/predictive'
+    | '/app/profile'
+    | '/app/recommendations'
+    | '/app/reports'
+    | '/app/risk'
+    | '/app/scheduling'
+    | '/app/settings'
+    | '/app/workload'
+    | '/app'
+  id:
+    | '__root__'
+    | '/'
+    | '/app'
+    | '/forgot-password'
+    | '/login'
+    | '/reset-password'
+    | '/app/allocation'
+    | '/app/audit'
+    | '/app/dashboard'
+    | '/app/employees'
+    | '/app/matching'
+    | '/app/predictive'
+    | '/app/profile'
+    | '/app/recommendations'
+    | '/app/reports'
+    | '/app/risk'
+    | '/app/scheduling'
+    | '/app/settings'
+    | '/app/workload'
+    | '/app/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRouteWithChildren
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
+  LoginRoute: typeof LoginRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app': {
+      id: '/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +298,150 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app/': {
+      id: '/app/'
+      path: '/'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/workload': {
+      id: '/app/workload'
+      path: '/workload'
+      fullPath: '/app/workload'
+      preLoaderRoute: typeof AppWorkloadRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/settings': {
+      id: '/app/settings'
+      path: '/settings'
+      fullPath: '/app/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/scheduling': {
+      id: '/app/scheduling'
+      path: '/scheduling'
+      fullPath: '/app/scheduling'
+      preLoaderRoute: typeof AppSchedulingRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/risk': {
+      id: '/app/risk'
+      path: '/risk'
+      fullPath: '/app/risk'
+      preLoaderRoute: typeof AppRiskRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/reports': {
+      id: '/app/reports'
+      path: '/reports'
+      fullPath: '/app/reports'
+      preLoaderRoute: typeof AppReportsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/recommendations': {
+      id: '/app/recommendations'
+      path: '/recommendations'
+      fullPath: '/app/recommendations'
+      preLoaderRoute: typeof AppRecommendationsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/profile': {
+      id: '/app/profile'
+      path: '/profile'
+      fullPath: '/app/profile'
+      preLoaderRoute: typeof AppProfileRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/predictive': {
+      id: '/app/predictive'
+      path: '/predictive'
+      fullPath: '/app/predictive'
+      preLoaderRoute: typeof AppPredictiveRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/matching': {
+      id: '/app/matching'
+      path: '/matching'
+      fullPath: '/app/matching'
+      preLoaderRoute: typeof AppMatchingRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/employees': {
+      id: '/app/employees'
+      path: '/employees'
+      fullPath: '/app/employees'
+      preLoaderRoute: typeof AppEmployeesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/dashboard': {
+      id: '/app/dashboard'
+      path: '/dashboard'
+      fullPath: '/app/dashboard'
+      preLoaderRoute: typeof AppDashboardRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/audit': {
+      id: '/app/audit'
+      path: '/audit'
+      fullPath: '/app/audit'
+      preLoaderRoute: typeof AppAuditRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/allocation': {
+      id: '/app/allocation'
+      path: '/allocation'
+      fullPath: '/app/allocation'
+      preLoaderRoute: typeof AppAllocationRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
+interface AppRouteChildren {
+  AppAllocationRoute: typeof AppAllocationRoute
+  AppAuditRoute: typeof AppAuditRoute
+  AppDashboardRoute: typeof AppDashboardRoute
+  AppEmployeesRoute: typeof AppEmployeesRoute
+  AppMatchingRoute: typeof AppMatchingRoute
+  AppPredictiveRoute: typeof AppPredictiveRoute
+  AppProfileRoute: typeof AppProfileRoute
+  AppRecommendationsRoute: typeof AppRecommendationsRoute
+  AppReportsRoute: typeof AppReportsRoute
+  AppRiskRoute: typeof AppRiskRoute
+  AppSchedulingRoute: typeof AppSchedulingRoute
+  AppSettingsRoute: typeof AppSettingsRoute
+  AppWorkloadRoute: typeof AppWorkloadRoute
+  AppIndexRoute: typeof AppIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppAllocationRoute: AppAllocationRoute,
+  AppAuditRoute: AppAuditRoute,
+  AppDashboardRoute: AppDashboardRoute,
+  AppEmployeesRoute: AppEmployeesRoute,
+  AppMatchingRoute: AppMatchingRoute,
+  AppPredictiveRoute: AppPredictiveRoute,
+  AppProfileRoute: AppProfileRoute,
+  AppRecommendationsRoute: AppRecommendationsRoute,
+  AppReportsRoute: AppReportsRoute,
+  AppRiskRoute: AppRiskRoute,
+  AppSchedulingRoute: AppSchedulingRoute,
+  AppSettingsRoute: AppSettingsRoute,
+  AppWorkloadRoute: AppWorkloadRoute,
+  AppIndexRoute: AppIndexRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRoute: AppRouteWithChildren,
+  ForgotPasswordRoute: ForgotPasswordRoute,
+  LoginRoute: LoginRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
