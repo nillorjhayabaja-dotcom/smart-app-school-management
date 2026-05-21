@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { PageHeader } from "@/components/shared/page-header";
@@ -14,8 +14,16 @@ import {
 } from "@/components/ui/select";
 import { Plus, Search, Filter, Download } from "lucide-react";
 
+// Only hr_admin and super_admin can view employees
+const checkAccess = (ctx: any) => {
+  if (ctx.auth?.user?.role && !["hr_admin", "super_admin"].includes(ctx.auth.user.role)) {
+    throw redirect({ to: "/app" });
+  }
+};
+
 export const Route = createFileRoute("/app/employees")({
   head: () => ({ meta: [{ title: "Employees · Workforce IQ" }] }),
+  beforeLoad: ({ context }: any) => checkAccess(context),
   component: Page,
 });
 

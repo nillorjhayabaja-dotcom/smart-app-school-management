@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate, useSearch } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { authService } from "@/services";
 import { toast } from "sonner";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Loader2 } from "lucide-react";
 
 const schema = z.object({
@@ -17,22 +17,52 @@ const schema = z.object({
 }).refine((d) => d.password === d.confirm, { path: ["confirm"], message: "Passwords don't match" });
 type FV = z.infer<typeof schema>;
 
-export const Route = createFileRoute("/reset-password")({ component: Page });
+export const Route = createFileRoute("/reset-password")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    token: (search.token as string) || "",
+  }),
+  component: Page,
+});
 
 function Page() {
   const navigate = useNavigate();
+  const { token } = useSearch({ from: "/reset-password" });
   const [submitting, setSubmitting] = useState(false);
+  const [validToken, setValidToken] = useState(false);
   const { register, handleSubmit, formState: { errors } } = useForm<FV>({ resolver: zodResolver(schema) });
 
+  useEffect(() => {
+    if (!token) {
+      toast.error("Invalid reset link. No token provided.");
+      navigate({ to: "/login" });
+    } else {
+      setValidToken(true);
+    }
+  }, [token, navigate]);
+
   const onSubmit = async (v: FV) => {
+    if (!validToken || !token) {
+      toast.error("Invalid reset link.");
+      return;
+    }
     setSubmitting(true);
     try {
-      await authService.reset("token", v.password);
+      await authService.reset(token, v.password);
       toast.success("Password updated. Please sign in.");
       navigate({ to: "/login" });
-    } catch (e: any) { toast.error(e?.message ?? "Failed"); }
+    } catch (e: any) { toast.error(e?.message ?? "Failed to reset password"); }
     finally { setSubmitting(false); }
   };
+
+  if (!validToken) {
+    return (
+      <AuthLayout title="Invalid Link" subtitle="This password reset link is invalid or expired.">
+        <Link to="/login" className="block text-center text-sm text-blue-600 hover:text-blue-700">
+          Back to sign in
+        </Link>
+      </AuthLayout>
+    );
+  }
 
   return (
     <AuthLayout title="Set a new password" subtitle="Choose a strong password you haven't used before.">

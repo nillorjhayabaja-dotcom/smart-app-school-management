@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { PageHeader } from "@/components/shared/page-header";
 import { TableSkeleton } from "@/components/shared/skeletons";
@@ -7,8 +7,16 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Download, FileBarChart2, Plus } from "lucide-react";
 
+// Only super_admin can view reports
+const checkAccess = (ctx: any) => {
+  if (ctx.auth?.user?.role !== "super_admin") {
+    throw redirect({ to: "/app" });
+  }
+};
+
 export const Route = createFileRoute("/app/reports")({
   head: () => ({ meta: [{ title: "Reports · Workforce IQ" }] }),
+  beforeLoad: ({ context }: any) => checkAccess(context),
   component: Page,
 });
 

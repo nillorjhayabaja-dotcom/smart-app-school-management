@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { PageHeader } from "@/components/shared/page-header";
 import { ChartCard } from "@/components/shared/chart-card";
 import { Switch } from "@/components/ui/switch";
@@ -8,8 +8,16 @@ import { Button } from "@/components/ui/button";
 import { useTheme } from "@/lib/theme";
 import { toast } from "sonner";
 
+// Only super_admin can access settings
+const checkAccess = (ctx: any) => {
+  if (ctx.auth?.user?.role !== "super_admin") {
+    throw redirect({ to: "/app" });
+  }
+};
+
 export const Route = createFileRoute("/app/settings")({
   head: () => ({ meta: [{ title: "Settings · Workforce IQ" }] }),
+  beforeLoad: ({ context }: any) => checkAccess(context),
   component: Page,
 });
 

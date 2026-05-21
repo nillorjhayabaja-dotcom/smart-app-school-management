@@ -1,12 +1,20 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { PageHeader } from "@/components/shared/page-header";
 import { TableSkeleton } from "@/components/shared/skeletons";
 import { auditService } from "@/services";
 import { Badge } from "@/components/ui/badge";
 
+// Only super_admin can view audit logs
+const checkAccess = (ctx: any) => {
+  if (ctx.auth?.user?.role !== "super_admin") {
+    throw redirect({ to: "/app" });
+  }
+};
+
 export const Route = createFileRoute("/app/audit")({
   head: () => ({ meta: [{ title: "Audit Logs · Workforce IQ" }] }),
+  beforeLoad: ({ context }: any) => checkAccess(context),
   component: Page,
 });
 

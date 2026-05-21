@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { PageHeader } from "@/components/shared/page-header";
@@ -9,8 +9,16 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Puzzle, Search } from "lucide-react";
 
+// Only hr_admin and super_admin can view skill matching
+const checkAccess = (ctx: any) => {
+  if (ctx.auth?.user?.role && !["hr_admin", "super_admin"].includes(ctx.auth.user.role)) {
+    throw redirect({ to: "/app" });
+  }
+};
+
 export const Route = createFileRoute("/app/matching")({
   head: () => ({ meta: [{ title: "Skill Matching · Workforce IQ" }] }),
+  beforeLoad: ({ context }: any) => checkAccess(context),
   component: Page,
 });
 

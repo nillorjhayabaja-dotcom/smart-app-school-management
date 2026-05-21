@@ -37,15 +37,47 @@ export async function apiRequest<T>(path: string, opts: Opts = {}): Promise<T> {
     const t = tokenStore.get();
     if (t) h.set("Authorization", `Bearer ${t}`);
   }
-  const res = await fetch(`${API_BASE}${path}`, {
+  let res = await fetch(`${API_BASE}${path}`, {
     ...rest,
     headers: h,
     body: json !== undefined ? JSON.stringify(json) : rest.body,
   });
-  if (res.status === 401 && auth) {
-    // Refresh token flow stub (wire real endpoint here)
-    tokenStore.clear();
+
+  // Handle token refresh on 401
+  if (res.status === 401 && auth && path !== "/auth/refresh") {
+    const refreshToken = tokenStore.getRefresh();
+    if (refreshToken) {
+      try {
+        const refreshRes = await fetch(`${API_BASE}/auth/refresh`, {
+          method: "POST",
+          headers: new Headers({ "Content-Type": "application/json" }),
+          body: JSON.stringify({ refresh_token: refreshToken }),
+        });
+        if (refreshRes.ok) {
+          const refreshData = await refreshRes.json();
+          if (refreshData.access_token) {
+            tokenStore.set(refreshData.access_token, refreshToken);
+            // Retry original request with new token
+            const retryHeaders = new Headers(headers);
+            retryHeaders.set("Authorization", `Bearer ${refreshData.access_token}`);
+            if (json !== undefined) retryHeaders.set("Content-Type", "application/json");
+            res = await fetch(`${API_BASE}${path}`, {
+              ...rest,
+              headers: retryHeaders,
+              body: json !== undefined ? JSON.stringify(json) : rest.body,
+            });
+          }
+        } else {
+          tokenStore.clear();
+        }
+      } catch {
+        tokenStore.clear();
+      }
+    } else {
+      tokenStore.clear();
+    }
   }
+
   const text = await res.text();
   const data = text ? safeJson(text) : null;
   if (!res.ok) throw new ApiError(res.status, (data as any)?.message ?? res.statusText, data);
