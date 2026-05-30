@@ -4,6 +4,7 @@ import {
   mockEmployees, enrollmentForecast, retentionTrend, workloadByDept,
   teacherDistribution, activeVsInactive, riskHeatmap, performanceScatter,
   mockSchedule, mockRecommendations, mockAuditLogs,
+  enrollmentForecast3Year, enrollmentForecastSummary, planningRecommendations,
 } from "@/api/mock-data";
 import type { User, Role } from "@/types";
 
@@ -40,6 +41,9 @@ export const employeeService = {
 
 export const analyticsService = {
   enrollment: () => delay(enrollmentForecast),
+  enrollmentForecast3Year: () => delay(enrollmentForecast3Year),
+  enrollmentSummary: () => delay(enrollmentForecastSummary),
+  planningRecommendations: () => delay(planningRecommendations),
   retention: () => delay(retentionTrend),
   workload: () => delay(workloadByDept),
   distribution: () => delay(teacherDistribution),

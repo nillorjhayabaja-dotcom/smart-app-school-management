@@ -5,7 +5,7 @@ import { KpiCard } from "@/components/shared/kpi-card";
 import { ChartCard } from "@/components/shared/chart-card";
 import { CardSkeleton, ChartSkeleton } from "@/components/shared/skeletons";
 import { analyticsService, recommendationService } from "@/services";
-import { Users, TrendingUp, ShieldAlert, Activity, Sparkles, GraduationCap } from "lucide-react";
+import { Users, TrendingUp, ShieldAlert, Sparkles, GraduationCap, AlertTriangle } from "lucide-react";
 import {
   ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid,
   BarChart, Bar, PieChart, Pie, Cell, Legend, AreaChart, Area,
@@ -30,12 +30,15 @@ const tooltipStyle = {
 
 function Dashboard() {
   const enrollment = useQuery({ queryKey: ["enrollment"], queryFn: analyticsService.enrollment });
+  const summary = useQuery({ queryKey: ["enrollmentSummary"], queryFn: analyticsService.enrollmentSummary });
   const retention = useQuery({ queryKey: ["retention"], queryFn: analyticsService.retention });
   const workload = useQuery({ queryKey: ["workload"], queryFn: analyticsService.workload });
   const dist = useQuery({ queryKey: ["distribution"], queryFn: analyticsService.distribution });
   const activity = useQuery({ queryKey: ["activity"], queryFn: analyticsService.activity });
   const risk = useQuery({ queryKey: ["risk"], queryFn: analyticsService.risk });
   const recs = useQuery({ queryKey: ["recs"], queryFn: recommendationService.list });
+
+  const s = summary.data;
 
   return (
     <div className="space-y-6">
@@ -45,18 +48,40 @@ function Dashboard() {
         actions={<><Button variant="outline" size="sm">Export</Button><Button size="sm">Run forecast</Button></>}
       />
 
-      {/* KPIs */}
+      {/* KPIs — driven by unified summary data */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {[
-          { label: "Total Employees", value: "48", delta: 3, icon: <Users className="h-4 w-4" />, hint: "vs last term" },
-          { label: "Forecast Enrollment", value: "2,148", delta: 6, icon: <GraduationCap className="h-4 w-4" />, hint: "next term" },
-          { label: "Retention Score", value: "91.4%", delta: 2, icon: <TrendingUp className="h-4 w-4" />, hint: "predicted" },
-          { label: "High-Risk Teachers", value: "7", delta: -12, icon: <ShieldAlert className="h-4 w-4" />, hint: "↓ improving" },
-        ].map((k) => <KpiCard key={k.label} {...k} />)}
+        <KpiCard
+          label="Total Employees"
+          value={s?.currentEmployees?.toString() ?? "48"}
+          delta={3}
+          icon={<Users className="h-4 w-4" />}
+          hint="vs last term"
+        />
+        <KpiCard
+          label="Current Enrollment"
+          value={s?.currentEnrollment?.toLocaleString() ?? "—"}
+          delta={s?.avgGrowthRate}
+          icon={<GraduationCap className="h-4 w-4" />}
+          hint={`${s?.avgGrowthRate}% avg growth`}
+        />
+        <KpiCard
+          label="Year 3 Projected"
+          value={s?.projectedYear3?.toLocaleString() ?? "—"}
+          delta={s?.growthPercentage}
+          icon={<TrendingUp className="h-4 w-4" />}
+          hint="enrollment forecast"
+        />
+        <KpiCard
+          label="Teacher Ratio (Year 3)"
+          value={`1:${s?.projectedRatioYear3?.toFixed(1) ?? "—"}`}
+          icon={<AlertTriangle className="h-4 w-4" />}
+          hint={s?.teachersDeficit ? `${s.teachersDeficit} teachers needed` : "PH std: 1:36–1:40"}
+          className={s && s.projectedRatioYear3 > 40 ? "border-destructive" : ""}
+        />
       </div>
 
       <div className="grid gap-4 lg:grid-cols-3">
-        <ChartCard title="Student Enrollment Forecast" description="Actual vs. predicted enrollment, 12-month window" className="lg:col-span-2">
+        <ChartCard title="Student Enrollment Trend" description="10-year history (unified data)" className="lg:col-span-2">
           {enrollment.isLoading ? <ChartSkeleton /> : (
             <ResponsiveContainer width="100%" height={280}>
               <AreaChart data={enrollment.data}>
@@ -67,12 +92,11 @@ function Dashboard() {
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
-                <XAxis dataKey="month" stroke="var(--muted-foreground)" fontSize={11} />
+                <XAxis dataKey="year" stroke="var(--muted-foreground)" fontSize={11} />
                 <YAxis stroke="var(--muted-foreground)" fontSize={11} />
                 <Tooltip contentStyle={tooltipStyle} />
                 <Legend wrapperStyle={{ fontSize: 11 }} />
-                <Area type="monotone" dataKey="actual" stroke="var(--chart-1)" fill="url(#g1)" strokeWidth={2} name="Actual" />
-                <Line type="monotone" dataKey="forecast" stroke="var(--chart-2)" strokeWidth={2} strokeDasharray="5 4" dot={false} name="Forecast" />
+                <Area type="monotone" dataKey="actual" stroke="var(--chart-1)" fill="url(#g1)" strokeWidth={2} name="Enrollment" />
               </AreaChart>
             </ResponsiveContainer>
           )}
