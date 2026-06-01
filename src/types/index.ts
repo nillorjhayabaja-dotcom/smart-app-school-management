@@ -53,3 +53,19 @@ export interface AuditLog {
   at: string;
   ip: string;
 }
+
+export interface EnrollmentSummary {
+  currentEnrollment: number;
+  projectedYear1: number;
+  projectedYear2: number;
+  projectedYear3: number;
+  totalGrowth: number;
+  growthPercentage: number;
+  currentEmployees: number;
+  teachersNeededYear3: number;
+  teachersDeficit: number;
+  currentRatio: number;
+  projectedRatioYear3: number;
+  confidence: number | string;
+  avgGrowthRate: number;
+}

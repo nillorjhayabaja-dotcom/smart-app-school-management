@@ -191,16 +191,17 @@ function Page() {
                   dot={(props: any) => {
                     const { cx, cy, payload } = props;
                     const isOverRatio = payload.teacherStudentRatio > 40;
-                    return (
-                      <circle
-                        cx={cx}
-                        cy={cy}
-                        r={5}
-                        fill={isOverRatio ? "var(--destructive)" : "var(--chart-1)"}
-                        stroke="white"
-                        strokeWidth={2}
-                      />
-                    );
+return (
+      <circle
+        key={payload.year}
+        cx={cx}
+        cy={cy}
+        r={5}
+        fill={isOverRatio ? "var(--destructive)" : "var(--chart-1)"}
+        stroke="white"
+        strokeWidth={2}
+      />
+    );
                   }}
                   name="teacherStudentRatio"
                 />

@@ -1,3 +1,4 @@
+import { apiRequest } from "@/api/client";
 // Service layer — swap mock returns for apiRequest() calls when backend is live.
 import { tokenStore } from "@/api/client";
 import {
