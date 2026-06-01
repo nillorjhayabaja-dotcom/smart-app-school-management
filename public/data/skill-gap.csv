@@ -1,0 +1,13 @@
+skill,existing,missing,critical,trainingPriority
+STEM Instruction,45,55,true,high
+ICT Proficiency,60,40,true,high
+Special Education,25,75,true,high
+Research Methodology,55,45,false,medium
+Classroom Management,75,25,true,medium
+Assessment Design,65,35,false,medium
+Digital Literacy,70,30,false,low
+Curriculum Development,50,50,true,high
+Data Analytics,30,70,true,high
+Counseling & Guidance,40,60,false,medium
+Laboratory Management,35,65,false,medium
+Sports Coaching,55,45,false,low

@@ -16,6 +16,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.router import api_router
+from app.api.v1.notifications_ws import router as ws_router
 from app.core.db import close_db, init_db
 from app.core.exceptions import register_exception_handlers
 from app.core.logging import get_logger, setup_logging
@@ -104,6 +105,9 @@ def create_app() -> FastAPI:
 
     # Include API routes with versioned prefix
     app.include_router(api_router, prefix=settings.api_prefix)
+
+    # Include WebSocket routes
+    app.include_router(ws_router)
     
     # Health check endpoint
     @app.get("/health", tags=["health"])

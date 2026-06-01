@@ -23,6 +23,7 @@ import { Route as AppReportsRouteImport } from './routes/app.reports'
 import { Route as AppRecommendationsRouteImport } from './routes/app.recommendations'
 import { Route as AppProfileRouteImport } from './routes/app.profile'
 import { Route as AppPredictiveRouteImport } from './routes/app.predictive'
+import { Route as AppNotificationsRouteImport } from './routes/app.notifications'
 import { Route as AppMatchingRouteImport } from './routes/app.matching'
 import { Route as AppEmployeesRouteImport } from './routes/app.employees'
 import { Route as AppDashboardRouteImport } from './routes/app.dashboard'
@@ -99,6 +100,11 @@ const AppPredictiveRoute = AppPredictiveRouteImport.update({
   path: '/predictive',
   getParentRoute: () => AppRoute,
 } as any)
+const AppNotificationsRoute = AppNotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppMatchingRoute = AppMatchingRouteImport.update({
   id: '/matching',
   path: '/matching',
@@ -136,6 +142,7 @@ export interface FileRoutesByFullPath {
   '/app/dashboard': typeof AppDashboardRoute
   '/app/employees': typeof AppEmployeesRoute
   '/app/matching': typeof AppMatchingRoute
+  '/app/notifications': typeof AppNotificationsRoute
   '/app/predictive': typeof AppPredictiveRoute
   '/app/profile': typeof AppProfileRoute
   '/app/recommendations': typeof AppRecommendationsRoute
@@ -156,6 +163,7 @@ export interface FileRoutesByTo {
   '/app/dashboard': typeof AppDashboardRoute
   '/app/employees': typeof AppEmployeesRoute
   '/app/matching': typeof AppMatchingRoute
+  '/app/notifications': typeof AppNotificationsRoute
   '/app/predictive': typeof AppPredictiveRoute
   '/app/profile': typeof AppProfileRoute
   '/app/recommendations': typeof AppRecommendationsRoute
@@ -178,6 +186,7 @@ export interface FileRoutesById {
   '/app/dashboard': typeof AppDashboardRoute
   '/app/employees': typeof AppEmployeesRoute
   '/app/matching': typeof AppMatchingRoute
+  '/app/notifications': typeof AppNotificationsRoute
   '/app/predictive': typeof AppPredictiveRoute
   '/app/profile': typeof AppProfileRoute
   '/app/recommendations': typeof AppRecommendationsRoute
@@ -201,6 +210,7 @@ export interface FileRouteTypes {
     | '/app/dashboard'
     | '/app/employees'
     | '/app/matching'
+    | '/app/notifications'
     | '/app/predictive'
     | '/app/profile'
     | '/app/recommendations'
@@ -221,6 +231,7 @@ export interface FileRouteTypes {
     | '/app/dashboard'
     | '/app/employees'
     | '/app/matching'
+    | '/app/notifications'
     | '/app/predictive'
     | '/app/profile'
     | '/app/recommendations'
@@ -242,6 +253,7 @@ export interface FileRouteTypes {
     | '/app/dashboard'
     | '/app/employees'
     | '/app/matching'
+    | '/app/notifications'
     | '/app/predictive'
     | '/app/profile'
     | '/app/recommendations'
@@ -361,6 +373,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppPredictiveRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/notifications': {
+      id: '/app/notifications'
+      path: '/notifications'
+      fullPath: '/app/notifications'
+      preLoaderRoute: typeof AppNotificationsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/matching': {
       id: '/app/matching'
       path: '/matching'
@@ -405,6 +424,7 @@ interface AppRouteChildren {
   AppDashboardRoute: typeof AppDashboardRoute
   AppEmployeesRoute: typeof AppEmployeesRoute
   AppMatchingRoute: typeof AppMatchingRoute
+  AppNotificationsRoute: typeof AppNotificationsRoute
   AppPredictiveRoute: typeof AppPredictiveRoute
   AppProfileRoute: typeof AppProfileRoute
   AppRecommendationsRoute: typeof AppRecommendationsRoute
@@ -422,6 +442,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppDashboardRoute: AppDashboardRoute,
   AppEmployeesRoute: AppEmployeesRoute,
   AppMatchingRoute: AppMatchingRoute,
+  AppNotificationsRoute: AppNotificationsRoute,
   AppPredictiveRoute: AppPredictiveRoute,
   AppProfileRoute: AppProfileRoute,
   AppRecommendationsRoute: AppRecommendationsRoute,

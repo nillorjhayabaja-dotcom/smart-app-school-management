@@ -14,6 +14,7 @@ import {
   DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { NotificationBell } from "@/components/notifications/NotificationBell";
 
 const nav = [
   { group: "Overview", items: [
@@ -32,6 +33,7 @@ const nav = [
     { to: "/app/recommendations", label: "Recommendations", icon: Sparkles },
   ]},
   { group: "System", items: [
+    { to: "/app/notifications", label: "Notifications", icon: Bell },
     { to: "/app/reports", label: "Reports", icon: FileBarChart2 },
     { to: "/app/audit", label: "Audit Logs", icon: ScrollText },
     { to: "/app/settings", label: "Settings", icon: Settings },
@@ -131,9 +133,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
             <Button variant="ghost" size="icon" onClick={toggle} aria-label="Toggle theme">
               {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </Button>
-            <Button variant="ghost" size="icon" aria-label="Notifications">
-              <Bell className="h-4 w-4" />
-            </Button>
+            <NotificationBell />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="ml-1 flex items-center gap-2 rounded-md p-1 pr-2 hover:bg-accent">
