@@ -9,6 +9,7 @@
  * apiRequest() calls — but always from the same unified endpoint.
  */
 import { apiRequest } from "@/api/client";
+import { jsPDF } from "jspdf";
 import {
   mockEmployees,
   enrollmentForecast,
@@ -346,9 +347,64 @@ export const reportsService = {
 
   // ── Export ───────────────────────────────────────────────────────────
   async exportReport(reportId: ReportId, format: ExportFormat, filters?: ReportFilter): Promise<Blob> {
-    const content = `Report: ${reportId}\nFormat: ${format}\nGenerated: ${new Date().toISOString()}\nFilters: ${JSON.stringify(filters || {})}`;
+    if (format === "pdf") {
+      const doc = new jsPDF({ unit: "mm", format: "a4" });
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const now = new Date();
+
+      // Header
+      doc.setFontSize(18);
+      doc.text("Smart School Academy", pageWidth / 2, 20, { align: "center" });
+      doc.setFontSize(14);
+      doc.text("Reports Center", pageWidth / 2, 28, { align: "center" });
+      doc.setFontSize(10);
+      doc.text(`Report: ${reportId.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())}`, 14, 38);
+      doc.text(`Generated: ${now.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}`, 14, 44);
+      doc.text(`Format: PDF`, 14, 50);
+      if (filters && Object.keys(filters).length) {
+        doc.text(`Filters: ${JSON.stringify(filters)}`, 14, 56);
+      }
+
+      // Separator line
+      doc.setDrawColor(200);
+      doc.line(14, 60, pageWidth - 14, 60);
+
+      // Placeholder content
+      doc.setFontSize(12);
+      let y = 68;
+      doc.text("Summary", 14, y);
+      y += 8;
+      doc.setFontSize(10);
+      doc.text("This report provides an overview of key metrics and analytics for the selected academic period.", 14, y);
+      y += 10;
+      doc.text("For detailed interactive visualizations, please view the report within the application.", 14, y);
+      y += 10;
+      doc.text("Export date: " + now.toISOString(), 14, y);
+
+      // Footer
+      const footerY = doc.internal.pageSize.getHeight() - 15;
+      doc.setFontSize(8);
+      doc.setTextColor(150);
+      doc.text("Smart App School Management System — Confidential", pageWidth / 2, footerY, { align: "center" });
+      doc.text(`Page 1`, pageWidth / 2, footerY + 4, { align: "center" });
+
+      const blob = doc.output("blob");
+      return delay(blob, 500);
+    }
+
+    if (format === "excel") {
+      // For Excel, create a CSV with proper MIME type
+      const content = `Report,${reportId}\nFormat,${format}\nGenerated,${new Date().toISOString()}\nFilters,${JSON.stringify(filters || {})}`;
+      const blob = new Blob([content], {
+        type: "text/csv",
+      });
+      return delay(blob, 500);
+    }
+
+    // CSV format
+    const content = `Report,${reportId}\nFormat,${format}\nGenerated,${new Date().toISOString()}\nFilters,${JSON.stringify(filters || {})}`;
     const blob = new Blob([content], {
-      type: format === "pdf" ? "application/pdf" : format === "excel" ? "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" : "text/csv",
+      type: "text/csv;charset=utf-8",
     });
     return delay(blob, 500);
   },
