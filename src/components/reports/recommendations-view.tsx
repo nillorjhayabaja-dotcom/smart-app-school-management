@@ -92,17 +92,32 @@ export function RecommendationsView({ data, loading }: RecommendationsViewProps)
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between gap-2">
-                      <div>
-                        <h4 className="text-sm font-semibold">{rec.title}</h4>
-                        <p className="text-xs text-muted-foreground mt-1">{rec.description}</p>
+<div className="flex items-start justify-between gap-2">
+                        <div>
+                          <h4 className="text-sm font-semibold">{rec.title}</h4>
+                          <p className="text-xs text-muted-foreground mt-1">{rec.description}</p>
+
+                          {/* Department mapped from relatedMetrics[0] */}
+                          {rec.relatedMetrics?.[0] && (
+                            <p className="text-[10px] text-primary mt-1 font-medium">
+                              Department: {rec.relatedMetrics[0]}
+                            </p>
+                          )}
+                        </div>
+
+                        <div className="flex items-center gap-2 shrink-0">
+                          <Badge variant={rec.priority === "critical" ? "destructive" : rec.priority === "high" ? "secondary" : "outline"} className="text-[10px] uppercase">
+                            {rec.priority}
+                          </Badge>
+
+                          {/* Action button */}
+                          <button
+                            className="rounded-md bg-primary/10 text-primary hover:bg-primary/20 px-2 py-1 text-[10px] font-medium transition-colors"
+                          >
+                            Take Action
+                          </button>
+                        </div>
                       </div>
-                      <div className="flex items-center gap-2 shrink-0">
-                        <Badge variant={rec.priority === "critical" ? "destructive" : rec.priority === "high" ? "secondary" : "outline"} className="text-[10px] uppercase">
-                          {rec.priority}
-                        </Badge>
-                      </div>
-                    </div>
 
                     {rec.rationale && (
                       <div className="mt-3 rounded-lg bg-muted/50 p-3">
