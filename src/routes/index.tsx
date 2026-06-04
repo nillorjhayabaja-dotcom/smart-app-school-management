@@ -104,7 +104,7 @@ function Landing() {
       <footer className="border-t py-8">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-4 text-xs text-muted-foreground sm:flex-row sm:px-6 lg:px-8">
           <p>© 2026 Workforce IQ · Capstone Project</p>
-          <p>Built with TanStack Start · Recharts · shadcn/ui</p>
+          
         </div>
       </footer>
     </div>
