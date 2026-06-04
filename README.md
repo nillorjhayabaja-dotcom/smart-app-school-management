@@ -48,7 +48,7 @@
 
 ### Problem Statement
 
-Educational institutions struggle with workforce planning due to fragmented data, manual forecasting processes, and lack of predictive analytics. School administrators make critical staffing decisions—hiring, retention, and resource allocation—based on gut feeling rather than data-driven insights. This leads to teacher shortages, budget inefficiencies, and declining educational quality.
+Educational institutions struggle with workforce planning due to fragmented data, manual forecasting processes, and lack of predictive analytics. School administrators make critical staffing decisions hiring, retention, and resource allocation based on gut feeling rather than data-driven insights. This leads to teacher shortages, budget inefficiencies, and declining educational quality.
 
 ### Business Context
 
