@@ -112,24 +112,6 @@ WorkforceIQ EDU addresses these challenges by providing a centralized intelligen
 
 ---
 
-## Screenshots
-
-<!-- Add your screenshots here -->
-
-| Dashboard | Analytics | Reports |
-|-----------|-----------|---------|
-| ![Dashboard](docs/screenshots/dashboard.png) | ![Analytics](docs/screenshots/analytics.png) | ![Reports](docs/screenshots/reports.png) |
-
-| Workforce Allocation | Risk Assessment | Recommendations |
-|---------------------|-----------------|-----------------|
-| ![Allocation](docs/screenshots/allocation.png) | ![Risk](docs/screenshots/risk.png) | ![Recommendations](docs/screenshots/recommendations.png) |
-
-| Teacher Management | Notifications |
-|-------------------|---------------|
-| ![Teachers](docs/screenshots/teachers.png) | ![Notifications](docs/screenshots/notifications.png) |
-
----
-
 ## System Architecture
 
 ### High-Level Architecture
